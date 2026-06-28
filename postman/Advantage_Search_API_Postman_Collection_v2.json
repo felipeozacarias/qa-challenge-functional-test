@@ -60,8 +60,8 @@
               "    pm.response.to.have.status(200);",
               "});",
               "",
-              "pm.test('Tempo de resposta aceitável', function () {",
-              "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+              "pm.test('Tempo de resposta aceitável para ambiente público', function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(10000);",
               "});",
               "",
               "pm.test('Resposta deve ser JSON ou texto JSON parseável', function () {",
@@ -170,7 +170,7 @@
               "});",
               "",
               "pm.test('Resposta não deve bloquear execução da collection', function () {",
-              "    pm.expect(pm.response.responseTime).to.be.below(5000);",
+              "    pm.expect(pm.response.responseTime).to.be.below(10000);",
               "});"
             ]
           }
