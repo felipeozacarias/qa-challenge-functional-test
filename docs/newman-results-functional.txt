@@ -1,0 +1,35 @@
+newman
+
+Advantage Search API - Functional Challenge
+
+Data da execucao: 2026-06-28
+Ferramenta: Newman via npx
+Comando executado:
+
+npx --yes newman run /mnt/data/Advantage_Search_API_Postman_Collection_v2.json --reporters cli,json --reporter-json-export /mnt/data/newman-results-functional.json
+
+Resultado geral:
+- Requests executadas: 3
+- Requests com falha: 3
+- Assertions executadas: 8
+- Assertions com falha: 7
+- Duração total: 125ms
+- Dados recebidos: 0B
+
+Falha observada:
+Todas as requisições falharam por erro de resolução DNS no ambiente de execução:
+
+getaddrinfo EAI_AGAIN www.advantageonlineshopping.com
+
+Requests impactadas:
+1. GET Search Products - Valid Term
+   GET https://www.advantageonlineshopping.com/catalog/api/v1/products/search?name=LAPTOP
+
+2. GET Search Products - Invalid Term
+   GET https://www.advantageonlineshopping.com/catalog/api/v1/products/search?name=XYZINVALIDO123
+
+3. GET Search Products - Missing Query Parameter
+   GET https://www.advantageonlineshopping.com/catalog/api/v1/products/search
+
+Parecer tecnico:
+A collection foi executada, mas o ambiente atual nao conseguiu resolver o host www.advantageonlineshopping.com. A falha identificada e de conectividade/DNS do ambiente de execucao, nao de estrutura da collection. Recomenda-se executar novamente localmente no Postman ou Newman em ambiente com acesso normal a internet.
