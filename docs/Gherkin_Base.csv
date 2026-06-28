@@ -1,0 +1,105 @@
+Linha,Conteudo Gherkin
+1,# language: pt
+2,@funcional @advantage
+3,Funcionalidade: Busca carrinho e checkout no Advantage Online Shopping
+4,Como cliente do ecommerce
+5,Quero buscar produtos adiciona-los ao carrinho e validar os itens no pagamento
+6,Para garantir que o fluxo critico de compra funcione corretamente
+7,
+8,Contexto:
+9,Dado que acesso o site Advantage Online Shopping
+10,
+11,@web @p0 @busca
+12,Cenario: Realizar busca de produto existente
+13,Quando realizo a busca pelo produto LAPTOP
+14,Entao devo visualizar uma lista de produtos relacionados a busca LAPTOP
+15,E a lista nao deve exibir produtos incompativeis com a busca realizada
+16,
+17,@web @p0 @carrinho
+18,Cenario: Incluir produto pesquisado no carrinho
+19,Dado que realizei a busca pelo produto LAPTOP
+20,Quando adiciono o primeiro produto disponivel ao carrinho
+21,Entao devo visualizar a confirmacao de produto adicionado com sucesso
+22,E o contador do carrinho deve ser atualizado
+23,
+24,@web @p0 @checkout
+25,Cenario: Validar produto incluido na tela de pagamento
+26,Dado que adicionei um produto ao carrinho
+27,Quando acesso o carrinho de compras
+28,E avanço para a tela de pagamento
+29,Entao devo visualizar o produto incluido na tela de pagamento
+30,E o nome preco quantidade e total devem estar corretos
+31,
+32,@web @p0 @busca @negativo
+33,Cenario: Buscar produto inexistente
+34,Quando realizo a busca pelo produto XYZINVALIDO123
+35,Entao o sistema deve tratar a ausencia de resultados
+36,E nao deve exibir erro tecnico ou quebra de layout
+37,
+38,@web @p1 @busca
+39,Esquema do Cenario: Validar busca com diferentes entradas
+40,Quando realizo a busca pelo produto <termo>
+41,Entao o sistema deve exibir resultado ou mensagem compativel com a entrada <termo>
+42,E nao deve apresentar erro tecnico
+43,
+44,Exemplos: LAP laptop LAPTOP termo-invalido
+45,
+46,@web @p1 @carrinho
+47,Cenario: Remover produto do carrinho
+48,Dado que adicionei um produto ao carrinho
+49,Quando removo o produto do carrinho
+50,Entao o carrinho deve ser atualizado
+51,E o produto removido nao deve permanecer listado
+52,
+53,@web @p1 @carrinho
+54,Cenario: Adicionar dois produtos diferentes ao carrinho
+55,Dado que existem pelo menos dois produtos disponiveis
+56,Quando adiciono dois produtos diferentes ao carrinho
+57,Entao os dois produtos devem ser exibidos no carrinho
+58,E os valores individuais e total devem ser calculados corretamente
+59,
+60,@api @advantage
+61,Funcionalidade: Pesquisa de produtos via API do Advantage Online Shopping
+62,Como QA
+63,Quero validar a busca de produtos pela API
+64,Para garantir status code contrato e aderencia dos resultados ao termo pesquisado
+65,
+66,Contexto: Dado que possuo o endpoint /catalog/api/v1/products/search
+67,
+68,@api @p0 @status-code
+69,Cenario: Executar pesquisa via API com termo valido
+70,Quando envio uma requisicao GET com o parametro de busca name igual a LAPTOP
+71,Entao o status code da resposta deve ser 200
+72,E o payload da resposta deve estar em formato valido
+73,
+74,@api @p0 @contrato
+75,Cenario: Validar que a lista exibe somente produtos conforme a busca
+76,Quando envio uma requisicao GET com o parametro de busca name igual a LAPTOP
+77,Entao todos os produtos retornados devem estar relacionados a busca LAPTOP
+78,E nenhum produto incompativel deve ser retornado na lista
+79,
+80,@api @p0 @schema
+81,Cenario: Validar schema minimo da resposta da API
+82,Quando envio uma requisicao GET com o parametro de busca name igual a LAPTOP
+83,Entao a resposta deve conter uma lista de produtos
+84,E cada produto deve possuir campos minimos de identificacao conforme contrato da API
+85,
+86,@api @p1 @negativo
+87,Cenario: Pesquisar termo inexistente via API
+88,Quando envio uma requisicao GET com o parametro de busca name igual a XYZINVALIDO123
+89,Entao a API deve retornar uma resposta controlada
+90,E nao deve retornar erro interno nao tratado
+91,
+92,@api @p1 @entrada
+93,Esquema do Cenario: Validar pesquisa via API com diferentes entradas
+94,Quando envio uma requisicao GET com o parametro de busca name igual a <termo>
+95,Entao a API deve retornar status e payload coerentes com a entrada <termo>
+96,E nao deve apresentar falha tecnica
+97,
+98,Exemplos: LAP laptop LAPTOP termo-invalido
+99,
+100,@api @p1 @contrato
+101,Cenario: Enviar requisicao sem parametro de busca
+102,Quando envio uma requisicao GET sem parametro de busca
+103,Entao a API deve retornar resposta documentada ou erro controlado
+104,E o comportamento deve ser registrado como regra funcional observada
