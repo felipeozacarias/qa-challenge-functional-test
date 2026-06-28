@@ -1,0 +1,4 @@
+Item,Metodo,URL/Endpoint,Validacoes principais
+GET Search Products - Valid Term,GET,{{baseUrl}}/catalog/api/v1/products/search?name={{searchTerm}},Status 200; tempo < 3000ms; JSON valido; produtos relacionados a busca
+GET Search Products - Invalid Term,GET,{{baseUrl}}/catalog/api/v1/products/search?name={{invalidSearchTerm}},Resposta controlada; nao deve retornar 500
+GET Search Products - Missing Query Parameter,GET,{{baseUrl}}/catalog/api/v1/products/search,Comportamento registrado; nao deve bloquear execucao
