@@ -1,0 +1,14 @@
+Desafio 2 - Teste Funcional | Advantage Online Shopping,
+Gerado em,2026-06-28 00:19
+Objetivo,"Cenários funcionais em Gherkin para Web e API, com matriz de cobertura e apoio à execução."
+Fonte Web,https://advantageonlineshopping.com/#/
+Fonte API Docs,https://www.advantageonlineshopping.com/api/docs/
+Endpoint API,https://www.advantageonlineshopping.com/catalog/api/v1/products/search
+,
+Indicador,Quantidade
+Total de cenários,30
+Cenários Web,18
+Cenários API,12
+P0,10
+P1,16
+P2,4
