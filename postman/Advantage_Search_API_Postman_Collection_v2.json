@@ -1,0 +1,181 @@
+{
+  "info": {
+    "name": "Advantage Search API - Functional Challenge",
+    "_postman_id": "advantage-search-api-functional-challenge",
+    "description": "Collection para validar busca de produtos no Advantage Online Shopping - Desafio funcional QA.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://www.advantageonlineshopping.com"
+    },
+    {
+      "key": "searchTerm",
+      "value": "LAPTOP"
+    },
+    {
+      "key": "invalidSearchTerm",
+      "value": "XYZINVALIDO123"
+    }
+  ],
+  "item": [
+    {
+      "name": "GET Search Products - Valid Term",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/catalog/api/v1/products/search?name={{searchTerm}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "catalog",
+            "api",
+            "v1",
+            "products",
+            "search"
+          ],
+          "query": [
+            {
+              "key": "name",
+              "value": "{{searchTerm}}"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code deve ser 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Tempo de resposta aceitável', function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+              "});",
+              "",
+              "pm.test('Resposta deve ser JSON ou texto JSON parseável', function () {",
+              "    let data;",
+              "    try { data = pm.response.json(); } catch (e) { data = JSON.parse(pm.response.text()); }",
+              "    pm.expect(data).to.exist;",
+              "});",
+              "",
+              "pm.test('Produtos retornados devem estar relacionados à busca quando houver lista', function () {",
+              "    const term = pm.variables.get('searchTerm').toLowerCase().trim();",
+              "    let data;",
+              "    try { data = pm.response.json(); } catch (e) { data = JSON.parse(pm.response.text()); }",
+              "    const list = Array.isArray(data) ? data : (data.products || data.data || data);",
+              "    if (Array.isArray(list)) {",
+              "        list.forEach(function (product) {",
+              "            const text = JSON.stringify(product).toLowerCase();",
+              "            pm.expect(text).to.include(term.split(' ')[0]);",
+              "        });",
+              "    }",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET Search Products - Invalid Term",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/catalog/api/v1/products/search?name={{invalidSearchTerm}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "catalog",
+            "api",
+            "v1",
+            "products",
+            "search"
+          ],
+          "query": [
+            {
+              "key": "name",
+              "value": "{{invalidSearchTerm}}"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('API deve responder de forma controlada', function () {",
+              "    pm.expect([200, 204, 400, 404]).to.include(pm.response.code);",
+              "});",
+              "",
+              "pm.test('API não deve retornar erro interno para termo inexistente', function () {",
+              "    pm.expect(pm.response.code).to.not.equal(500);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET Search Products - Missing Query Parameter",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/catalog/api/v1/products/search",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "catalog",
+            "api",
+            "v1",
+            "products",
+            "search"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Comportamento sem parâmetro deve ser registrado', function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200, 204, 400, 404, 422, 500]);",
+              "});",
+              "",
+              "pm.test('Resposta não deve bloquear execução da collection', function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(5000);",
+              "});"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
