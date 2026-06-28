@@ -1,0 +1,59 @@
+Newman execution evidence - local success
+
+Data da execucao: 2026-06-28
+Executor: Felipe Zacarias
+Ambiente: Windows / PowerShell local
+Ferramenta: Newman 6.2.2
+Repositorio: qa-challenge-functional-test
+Collection: postman/Advantage_Search_API_Postman_Collection_v2.json
+
+Comando executado:
+npx newman run postman/Advantage_Search_API_Postman_Collection_v2.json
+
+Resultado geral:
+- Iterations: 1 executada, 0 falhas
+- Requests: 3 executadas, 0 falhas
+- Test scripts: 3 executados, 0 falhas
+- Assertions: 8 executadas, 0 falhas
+- Duracao total: 11.2s
+- Dados recebidos: 1.68kB aproximadamente
+- Tempo medio de resposta: 3.6s
+- Tempo minimo de resposta: 227ms
+- Tempo maximo de resposta: 5.8s
+
+Requests executadas:
+
+1. GET Search Products - Valid Term
+   URL: https://www.advantageonlineshopping.com/catalog/api/v1/products/search?name=LAPTOP
+   Resultado HTTP: 200 OK
+   Tamanho aproximado: 1.26kB
+   Tempo de resposta: 5.8s
+   Validacoes aprovadas:
+   - Status code deve ser 200
+   - Tempo de resposta aceitavel para ambiente publico
+   - Resposta deve ser JSON ou texto JSON parseavel
+   - Produtos retornados devem estar relacionados a busca quando houver lista
+
+2. GET Search Products - Invalid Term
+   URL: https://www.advantageonlineshopping.com/catalog/api/v1/products/search?name=XYZINVALIDO123
+   Resultado HTTP: 200 OK
+   Tamanho aproximado: 338B
+   Tempo de resposta: 4.7s
+   Validacoes aprovadas:
+   - API deve responder de forma controlada
+   - API nao deve retornar erro interno para termo inexistente
+
+3. GET Search Products - Missing Query Parameter
+   URL: https://www.advantageonlineshopping.com/catalog/api/v1/products/search
+   Resultado HTTP: 500 Internal Server Error
+   Tamanho aproximado: 1.24kB
+   Tempo de resposta: 227ms
+   Validacoes aprovadas:
+   - Comportamento sem parametro deve ser registrado
+   - Resposta nao deve bloquear execucao da collection
+
+Parecer tecnico:
+A collection Postman/Newman do Desafio 2 foi executada localmente com sucesso. As 3 requests foram executadas sem falhas e as 8 assertions passaram. O endpoint de busca valida retornou 200 OK, payload parseavel e produtos relacionados ao termo pesquisado. O cenario sem parametro retornou 500, mas esse comportamento foi tratado como cenario negativo/de contrato observado e registrado sem quebrar a execucao da collection.
+
+Conclusao:
+Desafio 2 validado localmente via Newman com 3 requests executadas, 0 falhas de request e 8 assertions aprovadas.
