@@ -1,0 +1,46 @@
+Newman execution evidence - latest run
+
+Data da execucao: 2026-06-28
+Ferramenta: Newman 6.2.2
+Ambiente: runtime atual do ChatGPT/container
+Collection: Advantage_Search_API_Postman_Collection_v2.json
+
+Comando executado:
+npx --yes newman run /mnt/data/Advantage_Search_API_Postman_Collection_v2.json --reporters cli,json --reporter-json-export /mnt/data/newman-results-functional.json
+
+Resultado geral:
+- Iterations: 1 executada, 0 falhas
+- Requests: 3 executadas, 3 falhas
+- Test scripts: 3 executados, 0 falhas
+- Assertions: 8 executadas, 7 falhas
+- Duracao total: 286ms
+- Dados recebidos: 0B
+
+Requests executadas:
+1. GET Search Products - Valid Term
+   GET https://www.advantageonlineshopping.com/catalog/api/v1/products/search?name=LAPTOP
+   Resultado: erro de DNS
+   Detalhe: getaddrinfo EAI_AGAIN www.advantageonlineshopping.com
+
+2. GET Search Products - Invalid Term
+   GET https://www.advantageonlineshopping.com/catalog/api/v1/products/search?name=XYZINVALIDO123
+   Resultado: erro de DNS
+   Detalhe: getaddrinfo EAI_AGAIN www.advantageonlineshopping.com
+
+3. GET Search Products - Missing Query Parameter
+   GET https://www.advantageonlineshopping.com/catalog/api/v1/products/search
+   Resultado: erro de DNS
+   Detalhe: getaddrinfo EAI_AGAIN www.advantageonlineshopping.com
+
+Checagem adicional executada:
+curl -I -L --max-time 20 https://www.advantageonlineshopping.com/catalog/api/v1/products/search?name=LAPTOP
+
+Resultado do curl:
+curl: (6) Could not resolve host: www.advantageonlineshopping.com
+
+Parecer tecnico:
+A collection foi executada corretamente pelo Newman, mas nenhuma request chegou ao servidor porque o ambiente atual nao conseguiu resolver o host www.advantageonlineshopping.com. A falha observada e de DNS/conectividade do ambiente de execucao, nao de estrutura da collection Postman.
+
+Recomendacao:
+Executar novamente localmente pelo Postman ou Newman em ambiente com acesso normal a internet:
+newman run postman/Advantage_Search_API_Postman_Collection_v2.json
