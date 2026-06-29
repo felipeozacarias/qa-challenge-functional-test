@@ -59,8 +59,18 @@ Ou executar via Newman, caso instalado localmente:
 newman run postman/Advantage_Search_API_Postman_Collection_v2.json
 ```
 
+## Observações e Decisões Técnicas
+
+Durante a construção deste desafio, priorizei primeiro os fluxos obrigatórios solicitados no enunciado, para garantir uma entrega funcional e executável dentro do prazo. Depois, complementei a solução com evidências, checklist de atendimento e alguns ajustes de estabilidade.
+
+No desafio funcional, organizei os cenários priorizando o fluxo crítico: busca, carrinho e pagamento. Em seguida, ampliei a cobertura com cenários negativos, variações de entrada, validações de API e comportamento observado em ambiente público.
+
+Também executei a collection de API e registrei as evidências. Como o endpoint público apresentou variação no tempo de resposta, ajustei a validação de performance para uma faixa mais realista, mantendo o foco nos critérios principais do desafio: status code, payload e aderência dos produtos retornados ao termo pesquisado.
+
+Com mais tempo, eu evoluiria a entrega com relatório HTML, pipeline CI/CD, execução cross-browser, Page Objects mais completos e integração com ferramentas de gestão de testes.
+
 ## Observação
 
 Como se trata de ambiente público, eventuais indisponibilidades, lentidão ou alterações de comportamento devem ser registradas como evidência de execução.
 
-A matriz original em Excel foi convertida em arquivos CSV versionáveis para preservar o conteúdo tabular no GitHub via conector de arquivos texto.
+A matriz original em Excel foi convertida em arquivos CSV versionáveis para preservar o conteúdo tabular no GitHub.
