@@ -1,0 +1,22 @@
+{
+  "name": "qa-functional-testing-gherkin-postman",
+  "version": "1.0.0",
+  "description": "Projeto de testes funcionais Web e API com Gherkin e Postman/Newman",
+  "scripts": {
+    "test:api": "newman run postman/Advantage_Search_API_Postman_Collection_v2.json",
+    "ci": "node -e \"require('fs').mkdirSync('reports',{recursive:true})\" && newman run postman/Advantage_Search_API_Postman_Collection_v2.json --reporters cli,junit --reporter-junit-export reports/newman-report.xml"
+  },
+  "keywords": [
+    "qa",
+    "functional-testing",
+    "gherkin",
+    "postman",
+    "newman",
+    "api-testing"
+  ],
+  "author": "Felipe Zacarias",
+  "license": "MIT",
+  "devDependencies": {
+    "newman": "^6.2.2"
+  }
+}
