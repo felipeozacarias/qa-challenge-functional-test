@@ -1,10 +1,6 @@
 # Testes Funcionais Web e API | Advantage Online Shopping
 
-Projeto prático de QA voltado à análise funcional de fluxos Web e API, com cenários escritos em Gherkin, priorização por risco e validações de API com Postman/Newman. A proposta é demonstrar cobertura funcional, organização de cenários e registro de evidências de execução.
-
-## Objetivo
-
-Criar e organizar cenários funcionais em Gherkin para validar o fluxo crítico de compra no site Advantage Online Shopping e a busca de produtos via API.
+Projeto prático de Quality Engineering voltado à análise funcional de fluxos Web e API, com cenários em **Gherkin**, priorização por risco, matriz de cobertura, validações com **Postman/Newman**, rastreabilidade e CI/CD.
 
 ## Cobertura funcional
 
@@ -19,51 +15,89 @@ P1: 16
 P2: 4
 ```
 
-Resumo da cobertura:
-
-- busca de produto;
-- inclusão no carrinho;
-- validação na tela de pagamento;
-- cenários positivos e negativos;
-- variações de entrada;
-- remoção e múltiplos produtos;
-- smoke/regressão;
-- contrato e schema de API;
-- status code e payload;
-- comportamento sem parâmetro de busca.
+A cobertura contempla fluxo positivo, cenários negativos, variações de entrada, smoke/regressão, contrato de API e comportamentos observados em ambiente público.
 
 ## Escopo Web
 
-- Realizar busca de produto;
-- Incluir produto no carrinho;
-- Validar produto incluído no carrinho/tela de pagamento;
-- Cobrir cenários positivos, negativos, regressivos e exploratórios.
+- busca de produto;
+- inclusão de produto no carrinho;
+- validação do produto no checkout/pagamento;
+- busca inexistente;
+- remoção de produto;
+- múltiplos produtos;
+- validação de total;
+- cenários de regressão e exploração.
 
 ## Escopo API
 
-Endpoint base:
+Endpoint principal:
 
 ```text
 https://www.advantageonlineshopping.com/catalog/api/v1/products/search
 ```
 
-Cenários criados para:
+Cobertura:
 
-- Executar pesquisa via API;
-- Validar status code;
-- Validar se a lista exibe somente produtos conforme a busca;
-- Validar contrato mínimo da resposta;
-- Validar comportamentos negativos e de entrada.
+- busca válida;
+- status code;
+- aderência dos produtos ao termo pesquisado;
+- resposta parseável;
+- contrato mínimo;
+- termo inexistente;
+- ausência de parâmetro;
+- variações de entrada.
 
-## Resultados da execução de API
+## Artefatos
 
-Execução local da collection:
-
-```bash
-npx newman run postman/Advantage_Search_API_Postman_Collection_v2.json
+```text
+features/Advantage_Functional_Gherkin.feature
+postman/Advantage_Search_API_Postman_Collection_v2.json
+package.json
+docs/Resumo.csv
+docs/Matriz_Gherkin.csv
+docs/Gherkin_Base.csv
+docs/Postman_API.csv
+docs/Evidencias.csv
+docs/RASTREABILIDADE.md
+docs/evidencias/
+.github/workflows/qa-functional-api.yml
 ```
 
-Resultado consolidado:
+## Estratégia de priorização
+
+- **P0:** fluxo crítico e validações bloqueantes;
+- **P1:** regressão funcional relevante e comportamentos negativos;
+- **P2:** cenários exploratórios, integração e referências não bloqueantes.
+
+## Execução Postman/Newman
+
+Instale as dependências:
+
+```bash
+npm install
+```
+
+Execute a collection:
+
+```bash
+npm run test:api
+```
+
+Execute com geração de relatório JUnit:
+
+```bash
+npm run ci
+```
+
+O comando de CI gera:
+
+```text
+reports/newman-report.xml
+```
+
+## Resultado consolidado da API
+
+Última execução local registrada:
 
 ```text
 Iterations: 1 executada / 0 falhas
@@ -72,31 +106,61 @@ Test scripts: 3 executados / 0 falhas
 Assertions: 8 executadas / 0 falhas
 ```
 
-Evidências e documentação:
+Requests validadas:
 
+```text
+GET Search Products - Valid Term: 200 OK
+GET Search Products - Invalid Term: 200 OK
+GET Search Products - Missing Query Parameter: 500 Internal Server Error observado e tratado como cenário negativo
+```
+
+## CI/CD
+
+O workflow está versionado em:
+
+```text
+.github/workflows/qa-functional-api.yml
+```
+
+O pipeline é acionado em `push`, `pull_request` para `main` e também manualmente por `workflow_dispatch`.
+
+Etapas principais:
+
+1. checkout do repositório;
+2. configuração do Node.js;
+3. instalação do Newman como dependência do projeto;
+4. execução da collection;
+5. geração de relatório JUnit;
+6. publicação do relatório como artefato do GitHub Actions.
+
+## Rastreabilidade
+
+A relação entre requisito, risco, cenário, prioridade, artefato e evidência está documentada em:
+
+```text
+docs/RASTREABILIDADE.md
+```
+
+Esse documento conecta os fluxos Web e API às matrizes, features, collection e evidências de execução.
+
+## Evidências e documentação
+
+- [Rastreabilidade](docs/RASTREABILIDADE.md)
 - [Índice de evidências](docs/evidencias/INDICE.md)
 - [Execução Newman detalhada](docs/evidencias/evidencia-functional-test-newman-success.md)
 - [Checklist de cobertura](docs/CHECKLIST_ENTREGA_FINAL.md)
 - [Resumo quantitativo](docs/Resumo.csv)
 - [Matriz Gherkin](docs/Matriz_Gherkin.csv)
+- [Feature principal](features/Advantage_Functional_Gherkin.feature)
+- [Collection Postman](postman/Advantage_Search_API_Postman_Collection_v2.json)
 
-## Artefatos do repositório
+## Decisões técnicas
 
-```text
-features/Advantage_Functional_Gherkin.feature
-postman/Advantage_Search_API_Postman_Collection_v2.json
-docs/Resumo.csv
-docs/Matriz_Gherkin.csv
-docs/Gherkin_Base.csv
-docs/Postman_API.csv
-docs/Evidencias.csv
-```
+A cobertura foi organizada por risco para dar maior peso ao fluxo de negócio principal: busca, carrinho e pagamento. Depois foram adicionadas variações, cenários negativos e validações de contrato.
 
-## Estratégia de priorização
+O endpoint público apresentou variação no tempo de resposta; por isso a performance foi tratada como referência, mantendo como critérios principais o status code, payload e aderência dos resultados ao termo pesquisado.
 
-- P0: fluxo crítico principal;
-- P1: variações funcionais relevantes para regressão;
-- P2: testes exploratórios, integração Web/API e performance de referência.
+A chamada sem parâmetro retornou HTTP 500. Esse comportamento foi preservado como evidência de cenário negativo observado, sem transformar a resposta real do serviço em um resultado artificialmente positivo.
 
 ## Competências demonstradas
 
@@ -104,45 +168,20 @@ docs/Evidencias.csv
 - escrita BDD/Gherkin;
 - desenho de cenários positivos, negativos e de borda;
 - priorização baseada em risco;
-- estruturação de matriz de testes;
+- matriz de testes e cobertura;
+- testes manuais de API com Postman;
+- automação de collection com Newman;
 - validação de status code e payload;
-- testes de contrato e consistência de API;
-- uso de Postman/Newman;
-- tratamento de comportamento observado em ambiente público;
-- documentação e rastreabilidade de evidências.
+- contrato e consistência de API;
+- rastreabilidade requisito → cenário → evidência;
+- CI/CD com GitHub Actions;
+- geração de relatório JUnit.
 
-## Execução da collection Postman
+## Próximas evoluções
 
-Importar o arquivo abaixo no Postman:
-
-```text
-postman/Advantage_Search_API_Postman_Collection_v2.json
-```
-
-Ou executar via Newman:
-
-```bash
-newman run postman/Advantage_Search_API_Postman_Collection_v2.json
-```
-
-## Observações e Decisões Técnicas
-
-Durante a construção do projeto, priorizei primeiro os fluxos críticos para garantir uma base funcional clara e consistente. Depois, ampliei a cobertura com cenários negativos, variações de entrada, validações de API e registro de evidências.
-
-No fluxo funcional, organizei os cenários priorizando busca, carrinho e pagamento. Em seguida, acrescentei cenários complementares para comportamento negativo, diferentes entradas e validações de contrato e consistência da API.
-
-Também executei a collection de API e registrei as evidências. Como o endpoint público apresentou variação no tempo de resposta, ajustei a validação de performance para uma faixa mais realista, mantendo o foco em status code, payload e aderência dos produtos retornados ao termo pesquisado.
-
-Como se trata de ambiente público, eventuais indisponibilidades, lentidão ou alterações de comportamento são tratadas como fatores externos e registradas nas evidências de execução.
-
-## Evoluções possíveis
-
-Em uma próxima evolução, eu adicionaria:
-
-- relatório HTML consolidado;
-- execução integrada em pipeline CI/CD;
-- maior cobertura de cenários de contrato e borda;
+- relatório executivo HTML;
+- validação automatizada de schema JSON;
+- quality gate baseado em criticidade;
+- dashboard de cobertura;
 - integração com ferramenta de gestão de testes;
-- rastreabilidade entre cenários, execução e evidências.
-
-A matriz original em Excel foi convertida em arquivos CSV versionáveis para preservar o conteúdo tabular no GitHub.
+- ampliação dos cenários de contrato e borda.
