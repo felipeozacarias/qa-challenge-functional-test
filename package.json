@@ -1,10 +1,12 @@
 {
   "name": "qa-functional-testing-gherkin-postman",
-  "version": "1.0.0",
-  "description": "Projeto de testes funcionais Web e API com Gherkin e Postman/Newman",
+  "version": "1.1.0",
+  "description": "Projeto de testes funcionais Web e API com Gherkin, Postman/Newman, rastreabilidade e quality gate",
   "scripts": {
     "test:api": "newman run postman/Advantage_Search_API_Postman_Collection_v2.json",
-    "ci": "node -e \"require('fs').mkdirSync('reports',{recursive:true})\" && newman run postman/Advantage_Search_API_Postman_Collection_v2.json --reporters cli,junit --reporter-junit-export reports/newman-report.xml"
+    "quality:gate": "node scripts/quality-gate.js 8",
+    "report:html": "node scripts/generate-html-report.js",
+    "ci": "node -e \"require('fs').mkdirSync('reports',{recursive:true})\" && newman run postman/Advantage_Search_API_Postman_Collection_v2.json --reporters cli,junit --reporter-junit-export reports/newman-report.xml && npm run quality:gate && npm run report:html"
   },
   "keywords": [
     "qa",
@@ -12,7 +14,10 @@
     "gherkin",
     "postman",
     "newman",
-    "api-testing"
+    "api-testing",
+    "quality-gate",
+    "junit",
+    "traceability"
   ],
   "author": "Felipe Zacarias",
   "license": "MIT",
