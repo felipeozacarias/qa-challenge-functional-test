@@ -1,8 +1,10 @@
-# Desafio 2 - Teste Funcional | Advantage Online Shopping
+# Testes Funcionais Web e API | Advantage Online Shopping
+
+Projeto prático de QA voltado à análise funcional de fluxos Web e API, com cenários escritos em Gherkin, priorização por risco e validações de API com Postman/Newman. A proposta é demonstrar cobertura funcional, organização de cenários e registro de evidências de execução.
 
 ## Objetivo
 
-Criar cenários funcionais em Gherkin para validar o fluxo crítico de compra no site Advantage Online Shopping e a busca de produtos via API.
+Criar e organizar cenários funcionais em Gherkin para validar o fluxo crítico de compra no site Advantage Online Shopping e a busca de produtos via API.
 
 ## Escopo Web
 
@@ -41,7 +43,7 @@ docs/Evidencias.csv
 
 ## Estratégia de priorização
 
-- P0: fluxo crítico solicitado no desafio;
+- P0: fluxo crítico principal;
 - P1: variações funcionais relevantes para regressão;
 - P2: testes exploratórios, integração Web/API e performance de referência.
 
@@ -61,16 +63,22 @@ newman run postman/Advantage_Search_API_Postman_Collection_v2.json
 
 ## Observações e Decisões Técnicas
 
-Durante a construção deste desafio, priorizei primeiro os fluxos obrigatórios solicitados no enunciado, para garantir uma entrega funcional e executável dentro do prazo. Depois, complementei a solução com evidências, checklist de atendimento e alguns ajustes de estabilidade.
+Durante a construção do projeto, priorizei primeiro os fluxos críticos para garantir uma base funcional clara e consistente. Depois, ampliei a cobertura com cenários negativos, variações de entrada, validações de API e registro de evidências.
 
-No desafio funcional, organizei os cenários priorizando o fluxo crítico: busca, carrinho e pagamento. Em seguida, ampliei a cobertura com cenários negativos, variações de entrada, validações de API e comportamento observado em ambiente público.
+No fluxo funcional, organizei os cenários priorizando busca, carrinho e pagamento. Em seguida, acrescentei cenários complementares para comportamento negativo, diferentes entradas e validações de contrato e consistência da API.
 
-Também executei a collection de API e registrei as evidências. Como o endpoint público apresentou variação no tempo de resposta, ajustei a validação de performance para uma faixa mais realista, mantendo o foco nos critérios principais do desafio: status code, payload e aderência dos produtos retornados ao termo pesquisado.
+Também executei a collection de API e registrei as evidências. Como o endpoint público apresentou variação no tempo de resposta, ajustei a validação de performance para uma faixa mais realista, mantendo o foco em status code, payload e aderência dos produtos retornados ao termo pesquisado.
 
-Com mais tempo, eu evoluiria a entrega com relatório HTML, pipeline CI/CD, execução cross-browser, Page Objects mais completos e integração com ferramentas de gestão de testes.
+Como se trata de ambiente público, eventuais indisponibilidades, lentidão ou alterações de comportamento são tratadas como fatores externos e registradas nas evidências de execução.
 
-## Observação
+## Evoluções possíveis
 
-Como se trata de ambiente público, eventuais indisponibilidades, lentidão ou alterações de comportamento devem ser registradas como evidência de execução.
+Em uma próxima evolução, eu adicionaria:
+
+- relatório HTML consolidado;
+- execução integrada em pipeline CI/CD;
+- maior cobertura de cenários de contrato e borda;
+- integração com ferramenta de gestão de testes;
+- rastreabilidade entre cenários, execução e evidências.
 
 A matriz original em Excel foi convertida em arquivos CSV versionáveis para preservar o conteúdo tabular no GitHub.
