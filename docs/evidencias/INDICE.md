@@ -1,6 +1,6 @@
-# Evidências - Desafio 2 Teste Funcional
+# Evidências de Execução
 
-Esta pasta centraliza evidências da execução local do Desafio 2 - Teste Funcional.
+Esta pasta centraliza evidências da execução local dos testes de API do projeto funcional.
 
 ## Execução validada
 
@@ -25,8 +25,13 @@ Assertions: 8 executadas / 0 falhas
 evidencia-functional-test-newman-success.md
 ```
 
-O arquivo de evidência registra o resultado da execução Newman com as requests, status HTTP, validações aprovadas e resumo final.
+O arquivo registra requests, status HTTP, validações aprovadas, tempos de resposta e resumo final da execução Newman.
 
-## Observação
+## Cobertura comprovada
 
-O print original em PNG foi salvo localmente para anexo na plataforma de entrega. A evidência em Markdown foi versionada no GitHub para consulta rápida pelo avaliador técnico.
+- busca válida de produtos;
+- busca com termo inexistente;
+- comportamento sem parâmetro de busca;
+- validação de status code;
+- validação de payload;
+- validação de aderência dos resultados ao termo pesquisado.
