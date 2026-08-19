@@ -1,6 +1,6 @@
-# Evidência - Execução Newman - Desafio 2
+# Evidência - Execução Newman
 
-Esta evidência registra a execução local da collection Postman/Newman do Desafio 2 - Teste Funcional.
+Esta evidência registra a execução local da collection Postman/Newman utilizada no projeto funcional.
 
 ## Comando executado
 
@@ -52,8 +52,4 @@ max response time: 5.3s
 
 ## Parecer técnico
 
-A execução local da collection foi concluída com sucesso. As 3 requests foram executadas sem falhas e as 8 assertions passaram. O cenário sem parâmetro retornou HTTP 500, mas foi tratado como cenário negativo/de contrato observado, sem quebrar a execução da collection.
-
-## Observação sobre print
-
-O print original da execução Newman foi salvo localmente para anexo na plataforma de entrega. Este arquivo consolida a mesma evidência em formato Markdown versionado no repositório.
+A execução local da collection foi concluída com sucesso. As 3 requests foram executadas sem falhas e as 8 assertions passaram. O cenário sem parâmetro retornou HTTP 500 e foi registrado como comportamento negativo/de contrato observado, sem quebrar a execução da collection.
