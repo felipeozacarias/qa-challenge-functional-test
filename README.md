@@ -6,6 +6,32 @@ Projeto prático de QA voltado à análise funcional de fluxos Web e API, com ce
 
 Criar e organizar cenários funcionais em Gherkin para validar o fluxo crítico de compra no site Advantage Online Shopping e a busca de produtos via API.
 
+## Cobertura funcional
+
+A matriz consolidada contém:
+
+```text
+Total de cenários: 30
+Cenários Web: 18
+Cenários API: 12
+P0: 10
+P1: 16
+P2: 4
+```
+
+Resumo da cobertura:
+
+- busca de produto;
+- inclusão no carrinho;
+- validação na tela de pagamento;
+- cenários positivos e negativos;
+- variações de entrada;
+- remoção e múltiplos produtos;
+- smoke/regressão;
+- contrato e schema de API;
+- status code e payload;
+- comportamento sem parâmetro de busca.
+
 ## Escopo Web
 
 - Realizar busca de produto;
@@ -29,6 +55,31 @@ Cenários criados para:
 - Validar contrato mínimo da resposta;
 - Validar comportamentos negativos e de entrada.
 
+## Resultados da execução de API
+
+Execução local da collection:
+
+```bash
+npx newman run postman/Advantage_Search_API_Postman_Collection_v2.json
+```
+
+Resultado consolidado:
+
+```text
+Iterations: 1 executada / 0 falhas
+Requests: 3 executadas / 0 falhas
+Test scripts: 3 executados / 0 falhas
+Assertions: 8 executadas / 0 falhas
+```
+
+Evidências e documentação:
+
+- [Índice de evidências](docs/evidencias/INDICE.md)
+- [Execução Newman detalhada](docs/evidencias/evidencia-functional-test-newman-success.md)
+- [Checklist de cobertura](docs/CHECKLIST_ENTREGA_FINAL.md)
+- [Resumo quantitativo](docs/Resumo.csv)
+- [Matriz Gherkin](docs/Matriz_Gherkin.csv)
+
 ## Artefatos do repositório
 
 ```text
@@ -47,6 +98,19 @@ docs/Evidencias.csv
 - P1: variações funcionais relevantes para regressão;
 - P2: testes exploratórios, integração Web/API e performance de referência.
 
+## Competências demonstradas
+
+- análise funcional Web e API;
+- escrita BDD/Gherkin;
+- desenho de cenários positivos, negativos e de borda;
+- priorização baseada em risco;
+- estruturação de matriz de testes;
+- validação de status code e payload;
+- testes de contrato e consistência de API;
+- uso de Postman/Newman;
+- tratamento de comportamento observado em ambiente público;
+- documentação e rastreabilidade de evidências.
+
 ## Execução da collection Postman
 
 Importar o arquivo abaixo no Postman:
@@ -55,7 +119,7 @@ Importar o arquivo abaixo no Postman:
 postman/Advantage_Search_API_Postman_Collection_v2.json
 ```
 
-Ou executar via Newman, caso instalado localmente:
+Ou executar via Newman:
 
 ```bash
 newman run postman/Advantage_Search_API_Postman_Collection_v2.json
